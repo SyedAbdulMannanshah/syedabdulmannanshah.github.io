@@ -345,7 +345,7 @@
       <div class="stat-card"><div class="stat-num">99.9%</div><div class="stat-label">production uptime maintained</div></div>
       <div class="stat-card"><div class="stat-num">70%</div><div class="stat-label">faster deployment times</div></div>
       <div class="stat-card"><div class="stat-num">36%</div><div class="stat-label">cloud cost reduction</div></div>
-      <div class="stat-card"><div class="stat-num">83%</div><div class="stat-label">lower data transfer costs</div></div>
+      <div class="stat-card"><div class="stat-num">$3.2K</div><div class="stat-label">monthly AWS spend saved on one account</div></div>
     </div>
   </section>
 
@@ -354,7 +354,7 @@
     <div class="section-key"><span>#</span> stack.tf</div>
     <h2 class="section-title">Technical Stack</h2>
     <div class="config-block">
-      <div class="config-row"><div class="config-key">cloud_platforms</div><div class="config-val">AWS <span class="tag">(EC2, EBS, S3, VPC, ALB, ASG, CloudFront, IAM, RDS, SES, SNS, SQS, CodePipeline, CodeDeploy)</span>, Azure <span class="tag">(VM, Blob Storage)</span></div></div>
+      <div class="config-row"><div class="config-key">cloud_platforms</div><div class="config-val">AWS <span class="tag">(EC2, EBS, S3, VPC, ALB, ASG, CloudFront, IAM, RDS, SES, SNS, SQS, Lambda, IVS, CodePipeline, CodeDeploy)</span>, Azure <span class="tag">(VM, Blob Storage)</span>, GCP <span class="tag">(Compute Engine, containers)</span></div></div>
       <div class="config-row"><div class="config-key">ci_cd</div><div class="config-val">GitHub Actions, Jenkins, AWS CodePipeline, CodeDeploy, Bitbucket Pipelines, Git</div></div>
       <div class="config-row"><div class="config-key">iac</div><div class="config-val">Terraform, CloudFormation</div></div>
       <div class="config-row"><div class="config-key">containers</div><div class="config-val">Docker, Kubernetes</div></div>
@@ -364,6 +364,8 @@
       <div class="config-row"><div class="config-key">scripting</div><div class="config-val">Bash, Python</div></div>
       <div class="config-row"><div class="config-key">operating_systems</div><div class="config-val">Ubuntu, Amazon Linux, CentOS, Windows Server</div></div>
       <div class="config-row"><div class="config-key">networking_security</div><div class="config-val">VPC, Load Balancers, SSL/TLS, IAM, Security Groups</div></div>
+      <div class="config-row"><div class="config-key">security_assessment</div><div class="config-val">Vulnerability scanning, security header audits, SSL/TLS review, open port &amp; risk scoring</div></div>
+      <div class="config-row"><div class="config-key">telephony</div><div class="config-val">FreePBX, Twilio (SIP trunking), Amazon IVS</div></div>
     </div>
   </section>
 
@@ -437,6 +439,30 @@
         <div class="project-title">Offline Voice Communication System</div>
         <div class="project-desc">Developed a WebSocket-based voice communication platform running on Raspberry Pi devices for offline environments.</div>
       </div>
+      <div class="project-card">
+        <div class="project-title">AWS Cost Optimization Initiative</div>
+        <div class="project-desc">Audited and re-architected AWS resource allocation across a production account, cutting monthly spend from <span class="term-metric" style="font-family:var(--mono);">$7,800</span> to <span class="term-metric" style="font-family:var(--mono);">$4,600</span> — a <span class="term-metric" style="font-family:var(--mono);">$3,200</span> reduction in overall AWS costs with no impact on performance.</div>
+      </div>
+      <div class="project-card">
+        <div class="project-title">Serverless Thumbnail Generator (Lambda)</div>
+        <div class="project-desc">Built a Python-based AWS Lambda function that automatically generates thumbnails for uploaded images as well as documents — Excel, PowerPoint, Word, and PDF formats — storing the output directly in S3.</div>
+      </div>
+      <div class="project-card">
+        <div class="project-title">GCP Environment Discovery &amp; Documentation</div>
+        <div class="project-desc">Reverse-engineered an undocumented GCP deployment for a client with no visibility into their own infrastructure — identified whether workloads ran on containers or Compute Engine instances, traced the deployment pipeline end-to-end, and mapped the full configuration.</div>
+      </div>
+      <div class="project-card">
+        <div class="project-title">Automated Vulnerability Assessment Tool</div>
+        <div class="project-desc">Built a security scanning tool producing structured JSON reports covering vulnerabilities, security headers, SSL/TLS issues, open ports, information disclosure, technology stack detection, and a 0–100 risk score — used for authorized assessments of client-owned systems.</div>
+      </div>
+      <div class="project-card">
+        <div class="project-title">Amazon IVS Live Streaming Setup</div>
+        <div class="project-desc">Configured Amazon Interactive Video Service (IVS) to power low-latency live streaming and interactive video experiences for client applications.</div>
+      </div>
+      <div class="project-card">
+        <div class="project-title">FreePBX + Twilio Calling System</div>
+        <div class="project-desc">Configured FreePBX integrated with Twilio trunking to give a client their own independent, self-hosted business calling system.</div>
+      </div>
     </div>
   </section>
 
@@ -495,6 +521,7 @@
     { html: 'deploy_time.delta &nbsp;&rarr;&nbsp; <span class="term-metric">-70%</span>', delay: 4900 },
     { html: 'cloud_cost.delta &nbsp;&nbsp;&rarr;&nbsp; <span class="term-metric">-36%</span>', delay: 5300 },
     { html: 'data_transfer.delta &rarr;&nbsp; <span class="term-metric">-83%</span>', delay: 5700 },
+    { html: 'aws_account.monthly_cost &rarr;&nbsp; <span class="term-metric">$7,800 → $4,600</span>', delay: 6100 },
   ];
 
   const body = document.getElementById('term-body');
@@ -510,7 +537,7 @@
     });
     const cursorLine = document.createElement('div');
     cursorLine.className = 'term-line mono';
-    cursorLine.style.animationDelay = prefersReduced ? '0ms' : '6100ms';
+    cursorLine.style.animationDelay = prefersReduced ? '0ms' : '6600ms';
     cursorLine.innerHTML = '<span class="term-prompt">$</span> <span class="cursor"></span>';
     body.appendChild(cursorLine);
   }
