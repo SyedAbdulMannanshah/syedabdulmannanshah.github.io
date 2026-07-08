@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Syed Abdul Mannan Shah — Senior DevOps Engineer</title>
+<meta name="description" content="Senior DevOps Engineer specializing in AWS, Azure, Terraform, Kubernetes, and CI/CD automation.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0F1419;
+    --bg-terminal: #0A0D12;
+    --surface: #171D25;
+    --surface-2: #1D2530;
+    --border: #2A323D;
+    --border-soft: #202832;
+    --text: #E8EBF0;
+    --text-muted: #8B96A5;
+    --text-dim: #5B6472;
+    --teal: #5EEAD4;
+    --teal-dim: #2C7A6E;
+    --amber: #F5A962;
+    --red-dot: #E5675F;
+    --yellow-dot: #E6B450;
+    --green-dot: #59B37B;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --sans: 'Inter', system-ui, sans-serif;
+    --maxw: 1040px;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(94,234,212,0.06), transparent 40%),
+      radial-gradient(circle at 85% 15%, rgba(245,169,98,0.05), transparent 35%);
+  }
+
+  a{color:var(--teal); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--teal);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+
+  .mono{font-family:var(--mono);}
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(15,20,25,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border-soft);
+  }
+  .nav-inner{
+    max-width:var(--maxw); margin:0 auto; padding:16px 24px;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px;
+  }
+  .nav-brand{
+    font-family:var(--mono); font-size:14px; color:var(--text);
+    white-space:nowrap;
+  }
+  .nav-brand .prompt{color:var(--teal);}
+  .nav-links{
+    display:flex; gap:22px; list-style:none;
+    font-family:var(--mono); font-size:13px;
+  }
+  .nav-links a{color:var(--text-muted);}
+  .nav-links a:hover{color:var(--teal); text-decoration:none;}
+  .nav-links .num{color:var(--text-dim);}
+  @media (max-width:640px){
+    .nav-links{display:none;}
+  }
+
+  /* ---------- HERO / TERMINAL ---------- */
+  .hero{padding:64px 0 56px;}
+  .hero-kicker{
+    font-family:var(--mono); font-size:13px; color:var(--teal);
+    letter-spacing:0.04em; margin-bottom:14px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .status-dot{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--green-dot);
+    box-shadow:0 0 8px var(--green-dot);
+    flex-shrink:0;
+  }
+  .hero h1{
+    font-family:var(--mono); font-weight:800;
+    font-size:clamp(28px, 5vw, 46px);
+    line-height:1.15; letter-spacing:-0.01em;
+    color:var(--text); margin-bottom:10px;
+  }
+  .hero-role{
+    font-size:16px; color:var(--text-muted); margin-bottom:28px;
+    max-width:560px;
+  }
+  .hero-role strong{color:var(--text); font-weight:600;}
+
+  .terminal{
+    background:var(--bg-terminal);
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 20px 50px -20px rgba(0,0,0,0.6);
+  }
+  .terminal-bar{
+    display:flex; align-items:center; gap:8px;
+    padding:12px 16px;
+    background:var(--surface);
+    border-bottom:1px solid var(--border);
+  }
+  .terminal-dot{width:10px; height:10px; border-radius:50%;}
+  .terminal-title{
+    font-family:var(--mono); font-size:12px; color:var(--text-dim);
+    margin-left:8px;
+  }
+  .terminal-body{
+    padding:22px 20px 26px;
+    font-family:var(--mono);
+    font-size:13.5px;
+    color:#C7D0DC;
+    min-height:260px;
+  }
+  .term-line{margin-bottom:6px; opacity:0; animation:fadeIn 0.4s forwards;}
+  .term-prompt{color:var(--teal);}
+  .term-comment{color:var(--text-dim);}
+  .term-ok{color:var(--green-dot);}
+  .term-metric{color:var(--amber); font-weight:600;}
+  .cursor{
+    display:inline-block; width:8px; height:14px;
+    background:var(--teal); vertical-align:middle;
+    animation:blink 1s step-end infinite;
+  }
+  @keyframes blink{50%{opacity:0;}}
+  @keyframes fadeIn{to{opacity:1;}}
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  section{padding:52px 0;}
+  .section-border-top{border-top:1px solid var(--border-soft);}
+  .section-key{
+    font-family:var(--mono); font-size:13px; color:var(--text-dim);
+    margin-bottom:6px;
+  }
+  .section-key span{color:var(--teal);}
+  .section-title{
+    font-family:var(--mono); font-weight:700;
+    font-size:clamp(20px, 3vw, 26px);
+    color:var(--text); margin-bottom:24px;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-text{
+    font-size:15.5px; color:var(--text-muted); max-width:680px;
+  }
+  .about-stats{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:14px;
+    margin-top:28px;
+  }
+  @media (max-width:700px){ .about-stats{grid-template-columns:repeat(2,1fr);} }
+  .stat-card{
+    background:var(--surface); border:1px solid var(--border-soft);
+    border-radius:8px; padding:16px 14px;
+  }
+  .stat-num{
+    font-family:var(--mono); font-weight:700; font-size:22px; color:var(--teal);
+  }
+  .stat-label{
+    font-size:12px; color:var(--text-dim); margin-top:4px; line-height:1.4;
+  }
+
+  /* ---------- SKILLS (config block) ---------- */
+  .config-block{
+    background:var(--surface); border:1px solid var(--border-soft);
+    border-radius:8px; padding:22px 24px; font-family:var(--mono); font-size:13px;
+  }
+  .config-row{
+    display:flex; flex-wrap:wrap; gap:10px 0;
+    padding:9px 0; border-bottom:1px solid var(--border-soft);
+  }
+  .config-row:last-child{border-bottom:none;}
+  .config-key{
+    width:170px; flex-shrink:0; color:var(--text-dim);
+  }
+  .config-key::after{content:":"; color:var(--text-dim);}
+  .config-val{color:var(--text); flex:1; min-width:220px;}
+  .config-val .tag{
+    color:var(--teal);
+  }
+
+  /* ---------- EXPERIENCE (deploy log timeline) ---------- */
+  .job{
+    position:relative;
+    padding-left:26px;
+    border-left:1px solid var(--border);
+    margin-bottom:36px;
+  }
+  .job:last-child{margin-bottom:0;}
+  .job::before{
+    content:"";
+    position:absolute; left:-5px; top:4px;
+    width:9px; height:9px; border-radius:50%;
+    background:var(--teal);
+    box-shadow:0 0 0 4px rgba(94,234,212,0.12);
+  }
+  .job-head{
+    display:flex; flex-wrap:wrap; align-items:baseline;
+    gap:8px 14px; margin-bottom:4px;
+  }
+  .job-title{font-family:var(--mono); font-weight:700; font-size:15.5px; color:var(--text);}
+  .job-company{color:var(--teal); font-family:var(--mono); font-size:13.5px;}
+  .job-date{
+    font-family:var(--mono); font-size:12px; color:var(--text-dim);
+    margin-left:auto;
+  }
+  .job ul{
+    list-style:none; margin-top:12px;
+  }
+  .job li{
+    position:relative; padding-left:20px; margin-bottom:9px;
+    font-size:14.5px; color:var(--text-muted);
+  }
+  .job li::before{
+    content:"›"; position:absolute; left:0; color:var(--amber);
+    font-family:var(--mono); font-weight:700;
+  }
+
+  /* ---------- PROJECTS ---------- */
+  .projects-grid{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:16px;
+  }
+  @media (max-width:700px){ .projects-grid{grid-template-columns:1fr;} }
+  .project-card{
+    background:var(--surface); border:1px solid var(--border-soft);
+    border-radius:8px; padding:20px; transition:border-color 0.15s ease;
+  }
+  .project-card:hover{border-color:var(--teal-dim);}
+  .project-title{
+    font-family:var(--mono); font-weight:700; font-size:14.5px;
+    color:var(--text); margin-bottom:8px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .project-title::before{content:"▹"; color:var(--teal);}
+  .project-desc{font-size:14px; color:var(--text-muted);}
+
+  /* ---------- EDUCATION ---------- */
+  .edu-row{
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px 16px;
+    padding:14px 0; border-bottom:1px solid var(--border-soft);
+    font-size:14.5px;
+  }
+  .edu-row:last-child{border-bottom:none;}
+  .edu-name{color:var(--text); font-weight:600;}
+  .edu-school{color:var(--text-muted);}
+  .edu-date{font-family:var(--mono); font-size:12.5px; color:var(--text-dim);}
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  footer{
+    padding:56px 0 64px;
+    border-top:1px solid var(--border-soft);
+  }
+  .contact-terminal{
+    background:var(--bg-terminal); border:1px solid var(--border);
+    border-radius:10px; padding:26px 24px;
+  }
+  .contact-list{
+    list-style:none; margin-top:16px;
+    display:flex; flex-direction:column; gap:10px;
+    font-family:var(--mono); font-size:14px;
+  }
+  .contact-list a{color:var(--text);}
+  .contact-list a:hover{color:var(--teal);}
+  .contact-list .label{color:var(--text-dim); margin-right:10px;}
+  .footer-note{
+    margin-top:32px; font-family:var(--mono); font-size:12px; color:var(--text-dim);
+    text-align:center;
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand"><span class="prompt">smannan@devops</span>:~$</div>
+    <ul class="nav-links">
+      <li><a href="#about"><span class="num">01.</span> about</a></li>
+      <li><a href="#skills"><span class="num">02.</span> stack</a></li>
+      <li><a href="#experience"><span class="num">03.</span> experience</a></li>
+      <li><a href="#projects"><span class="num">04.</span> projects</a></li>
+      <li><a href="#contact"><span class="num">05.</span> contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-kicker"><span class="status-dot"></span> STATUS: OPEN TO OPPORTUNITIES</div>
+    <h1>Syed Abdul Mannan Shah</h1>
+    <p class="hero-role">
+      <strong>Senior DevOps Engineer</strong> — AWS · Azure · Terraform · Kubernetes · CI/CD.
+      Based in Lahore, Pakistan. 5+ years automating infrastructure that stays up.
+    </p>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="terminal-dot" style="background:var(--red-dot)"></span>
+        <span class="terminal-dot" style="background:var(--yellow-dot)"></span>
+        <span class="terminal-dot" style="background:var(--green-dot)"></span>
+        <span class="terminal-title">terraform — production.tf</span>
+      </div>
+      <div class="terminal-body" id="term-body"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section-border-top">
+    <div class="section-key"><span>#</span> summary.yml</div>
+    <h2 class="section-title">Professional Summary</h2>
+    <p class="about-text">
+      Senior DevOps Engineer with 5+ years of experience designing, automating, and managing cloud
+      infrastructure on AWS and Azure. Expertise in CI/CD pipelines, Infrastructure as Code (Terraform),
+      containerization, Kubernetes, Linux administration, cloud security, monitoring, and cost optimization.
+      Proven track record of reducing deployment times, cutting cloud costs, and maintaining high-availability
+      production systems.
+    </p>
+    <div class="about-stats">
+      <div class="stat-card"><div class="stat-num">99.9%</div><div class="stat-label">production uptime maintained</div></div>
+      <div class="stat-card"><div class="stat-num">70%</div><div class="stat-label">faster deployment times</div></div>
+      <div class="stat-card"><div class="stat-num">36%</div><div class="stat-label">cloud cost reduction</div></div>
+      <div class="stat-card"><div class="stat-num">83%</div><div class="stat-label">lower data transfer costs</div></div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="section-border-top">
+    <div class="section-key"><span>#</span> stack.tf</div>
+    <h2 class="section-title">Technical Stack</h2>
+    <div class="config-block">
+      <div class="config-row"><div class="config-key">cloud_platforms</div><div class="config-val">AWS <span class="tag">(EC2, EBS, S3, VPC, ALB, ASG, CloudFront, IAM, RDS, SES, SNS, SQS, CodePipeline, CodeDeploy)</span>, Azure <span class="tag">(VM, Blob Storage)</span></div></div>
+      <div class="config-row"><div class="config-key">ci_cd</div><div class="config-val">GitHub Actions, Jenkins, AWS CodePipeline, CodeDeploy, Bitbucket Pipelines, Git</div></div>
+      <div class="config-row"><div class="config-key">iac</div><div class="config-val">Terraform, CloudFormation</div></div>
+      <div class="config-row"><div class="config-key">containers</div><div class="config-val">Docker, Kubernetes</div></div>
+      <div class="config-row"><div class="config-key">monitoring</div><div class="config-val">CloudWatch, Prometheus, Grafana, ELK Stack</div></div>
+      <div class="config-row"><div class="config-key">web_servers</div><div class="config-val">Nginx, Apache, PM2</div></div>
+      <div class="config-row"><div class="config-key">databases</div><div class="config-val">MySQL, PostgreSQL, MSSQL</div></div>
+      <div class="config-row"><div class="config-key">scripting</div><div class="config-val">Bash, Python</div></div>
+      <div class="config-row"><div class="config-key">operating_systems</div><div class="config-val">Ubuntu, Amazon Linux, CentOS, Windows Server</div></div>
+      <div class="config-row"><div class="config-key">networking_security</div><div class="config-val">VPC, Load Balancers, SSL/TLS, IAM, Security Groups</div></div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="section-border-top">
+    <div class="section-key"><span>#</span> deploy.log</div>
+    <h2 class="section-title">Professional Experience</h2>
+
+    <div class="job">
+      <div class="job-head">
+        <span class="job-title">Senior DevOps Engineer</span>
+        <span class="job-company">Techliance Pvt Ltd</span>
+        <span class="job-date">Feb 2020 – Present</span>
+      </div>
+      <ul>
+        <li>Designed and managed highly available AWS infrastructure using ALB, Auto Scaling Groups, CloudFront, and RDS, maintaining 99.9% uptime.</li>
+        <li>Implemented CI/CD pipelines using GitHub Actions, Jenkins, AWS CodePipeline, and CodeDeploy, reducing deployment times by 70%.</li>
+        <li>Automated infrastructure provisioning with Terraform across development, staging, and production environments.</li>
+        <li>Reduced AWS data transfer costs by 83% using CloudFront and caching strategies.</li>
+        <li>Optimized cloud resources, reducing overall infrastructure costs by 36%.</li>
+        <li>Migrated Windows workloads to Ubuntu Linux, significantly reducing infrastructure requirements and improving performance.</li>
+        <li>Automated backup for EBS, RDS, and PostgreSQL databases.</li>
+        <li>Managed Docker deployments, RabbitMQ messaging systems, SSL/TLS security, and monitoring solutions using CloudWatch, Prometheus, Grafana, and ELK Stack.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-head">
+        <span class="job-title">System &amp; Network Engineer</span>
+        <span class="job-company">DWP Group</span>
+        <span class="job-date">Feb 2018 – Feb 2020</span>
+      </div>
+      <ul>
+        <li>Managed enterprise network and server infrastructure.</li>
+        <li>Implemented monitoring and security controls to improve reliability and performance.</li>
+        <li>Supported 500+ users while maintaining SLA compliance.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-head">
+        <span class="job-title">Technical Support Engineer</span>
+        <span class="job-company">Nexlinx Pvt Ltd</span>
+        <span class="job-date">Oct 2017 – Jan 2018</span>
+      </div>
+      <ul>
+        <li>Resolved system and network incidents while maintaining service-level agreements.</li>
+        <li>Assisted with server administration, deployments, and troubleshooting.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="section-border-top">
+    <div class="section-key"><span>#</span> projects.tf</div>
+    <h2 class="section-title">Key Projects</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-title">Scalable AWS Infrastructure</div>
+        <div class="project-desc">Designed AWS infrastructure with ALB, Auto Scaling, CloudFront, and CI/CD pipelines supporting high-traffic production applications with zero downtime.</div>
+      </div>
+      <div class="project-card">
+        <div class="project-title">GPU-Based AI Inference Platform</div>
+        <div class="project-desc">Deployed GPU-enabled image processing infrastructure achieving sub-50ms inference latency in production.</div>
+      </div>
+      <div class="project-card">
+        <div class="project-title">Offline Edge Computing Platform</div>
+        <div class="project-desc">Built Raspberry Pi-based edge infrastructure hosting Node.js applications and video content for 100+ concurrent users without internet access.</div>
+      </div>
+      <div class="project-card">
+        <div class="project-title">Offline Voice Communication System</div>
+        <div class="project-desc">Developed a WebSocket-based voice communication platform running on Raspberry Pi devices for offline environments.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="section-border-top">
+    <div class="section-key"><span>#</span> education.yml</div>
+    <h2 class="section-title">Education</h2>
+    <div class="config-block" style="font-family:var(--sans);">
+      <div class="edu-row">
+        <div><span class="edu-name">BS Computer Science</span> — <span class="edu-school">Lahore Leads University</span></div>
+        <div class="edu-date">2012 – 2016</div>
+      </div>
+      <div class="edu-row">
+        <div><span class="edu-name">ICS</span> — <span class="edu-school">BISE Lahore</span></div>
+        <div class="edu-date">2010 – 2012</div>
+      </div>
+      <div class="edu-row">
+        <div><span class="edu-name">Matriculation</span> — <span class="edu-school">BISE Lahore</span></div>
+        <div class="edu-date">2008 – 2010</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- CONTACT -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="section-key"><span>#</span> contact.sh</div>
+    <h2 class="section-title">Get in Touch</h2>
+    <div class="contact-terminal">
+      <span class="mono" style="color:var(--text-dim); font-size:13px;">$ cat contact.txt</span>
+      <ul class="contact-list">
+        <li><span class="label">location</span> Lahore, Pakistan</li>
+        <li><span class="label">phone</span> <a href="tel:+923034229959">+92-303-4229959</a></li>
+        <li><span class="label">email</span> <a href="mailto:shahabdulmanan@yahoo.com">shahabdulmanan@yahoo.com</a></li>
+        <li><span class="label">linkedin</span> <a href="https://linkedin.com/in/syed-abdul-mannan-shah-4393a0205" target="_blank" rel="noopener">linkedin.com/in/syed-abdul-mannan-shah-4393a0205</a></li>
+      </ul>
+    </div>
+    <div class="footer-note">© 2026 Syed Abdul Mannan Shah — built &amp; deployed with care.</div>
+  </div>
+</footer>
+
+<script>
+  const lines = [
+    { html: '<span class="term-prompt">$</span> whoami', delay: 0 },
+    { html: 'syed-abdul-mannan-shah <span class="term-comment">// senior devops engineer</span>', delay: 500 },
+    { html: '<span class="term-prompt">$</span> terraform apply -auto-approve', delay: 1100 },
+    { html: '<span class="term-comment">Initializing provider plugins for aws, azurerm...</span>', delay: 1700 },
+    { html: 'aws_cloudfront_distribution.cdn: Creating... <span class="term-ok">[ok]</span>', delay: 2300 },
+    { html: 'aws_autoscaling_group.web: Creating... <span class="term-ok">[ok]</span>', delay: 2800 },
+    { html: 'module.ci_cd_pipeline: Creating... <span class="term-ok">[ok]</span>', delay: 3300 },
+    { html: '&nbsp;', delay: 3700 },
+    { html: '<span class="term-ok">Apply complete!</span> Resources: 5 added, 0 changed, 0 destroyed.', delay: 3900 },
+    { html: 'uptime.production &nbsp;&rarr;&nbsp; <span class="term-metric">99.9%</span>', delay: 4500 },
+    { html: 'deploy_time.delta &nbsp;&rarr;&nbsp; <span class="term-metric">-70%</span>', delay: 4900 },
+    { html: 'cloud_cost.delta &nbsp;&nbsp;&rarr;&nbsp; <span class="term-metric">-36%</span>', delay: 5300 },
+    { html: 'data_transfer.delta &rarr;&nbsp; <span class="term-metric">-83%</span>', delay: 5700 },
+  ];
+
+  const body = document.getElementById('term-body');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function render(){
+    lines.forEach((l, i) => {
+      const div = document.createElement('div');
+      div.className = 'term-line mono';
+      div.innerHTML = l.html;
+      div.style.animationDelay = prefersReduced ? '0ms' : (l.delay) + 'ms';
+      body.appendChild(div);
+    });
+    const cursorLine = document.createElement('div');
+    cursorLine.className = 'term-line mono';
+    cursorLine.style.animationDelay = prefersReduced ? '0ms' : '6100ms';
+    cursorLine.innerHTML = '<span class="term-prompt">$</span> <span class="cursor"></span>';
+    body.appendChild(cursorLine);
+  }
+  render();
+</script>
+
+</body>
+</html>
